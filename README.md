@@ -1,3 +1,4 @@
+**DoctorConnect** is a healthcare platform designed to streamline patient registration, appointment scheduling, and medical records. Featuring complex forms and SMS notifications, it simplifies healthcare interactions for patients and providers. <br>
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

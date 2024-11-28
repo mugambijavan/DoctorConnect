@@ -4,27 +4,51 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import customformfield from "../customformfield"
+import Customformfield from "../Customformfield"
+import Submitbutton from "../Submitbutton"
+import { useState } from "react"
+import { UserFormValidation } from "@/lib/validation"
+import { useRouter } from "next/navigation"
+
+export enum FormFieldType {
+    INPUT = "input",
+    TEXTAREA= "textarea",
+    PHONE_INPUT = "phone-input",
+    CHECKBOX = "checkbox",
+    DATE_PICKER = "date-picker",
+    SELECT = "select",
+    SKELETON = "skeleton",
+}
     
-    const formSchema = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-    })
     
     const patientform =() => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+        const router = useRouter ();
+        const [isLoading, setIsLoading] = useState(false);
+
+    const form = useForm<z.infer<typeof UserFormValidation>>({
+        resolver: zodResolver(UserFormValidation),
         defaultValues: {
-        username: "",
+        name: "",
+        email: "",
+        phone: "",
         },
     })
+
+
     
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        setIsLoading(true);
+        try {
+        //    const userData ={name,email,phone }
+        //    const user = await createUser(userData);
+
+        //    if (user) router.push(`/patients/${user.$id}/register`)
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <Form {...form}>
@@ -36,9 +60,34 @@ import customformfield from "../customformfield"
                 </p>
             </section>
 
-            <customformfield />
+            <Customformfield 
+                fieldType={FormFieldType.INPUT}
+                control={form.control}
+                name= "name"
+                label="Full Name"
+                placeholder="Full Name"
+                iconSrc= "/assets/icons/user.svg"
+                iconAlt= "user"
+            />
+            <Customformfield
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="email"
+            label="Email"
+            placeholder="johndoe@gmail.com"
+            iconSrc="/assets/icons/email.svg"
+            iconAlt="email"
+            />
 
-            <Button type="submit">Submit</Button>
+            <Customformfield
+            fieldType={FormFieldType.PHONE_INPUT}
+            control={form.control}
+            name="phone"
+            label="Phone number"
+            placeholder="(555) 123-4567"
+            />
+
+            <Submitbutton isLoading={isLoading}>Get Started</Submitbutton>
         </form>
         </Form>
     )

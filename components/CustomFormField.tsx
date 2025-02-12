@@ -86,7 +86,7 @@ const CustomFormField = (props: CustomProps) => {
                 {fieldType === FormFieldType.CHECKBOX && label &&(
                     <FormLabel>{label}</FormLabel>
                 ) }
-                <RenderField field={field} props={props}/>
+                <RenderField field={{...field, value: field.value || ""}} props={props}/>
                 <FormMessage className='shad-error'/>
             </FormItem>
         )}

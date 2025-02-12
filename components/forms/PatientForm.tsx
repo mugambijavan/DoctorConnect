@@ -59,7 +59,7 @@ export enum FormFieldType {
                 control={form.control}
                 name="username"
                 label="Username"
-                placeholder="CahMyrrh"
+                placeholder="Cagmyrrh"
                 iconSrc="/assets/icons/user.svg"
                 iconAlt="user"
             />
@@ -68,7 +68,7 @@ export enum FormFieldType {
                 control={form.control}
                 name="email"
                 label="Email"
-                placeholder="CahMyrrh@gmail.com"
+                placeholder="name@gmail.com"
                 iconSrc="/assets/icons/email.svg"
                 iconAlt="email"
             />

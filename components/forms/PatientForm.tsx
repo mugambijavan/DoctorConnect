@@ -36,17 +36,26 @@ export enum FormFieldType {
     })
     
     // 2. Define a submit handler.
-    async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
-        setIsLoading(true);
-        try {
-            const userData = {name,email,phone}
-            const user = await createUser(userData);
+    // Add detailed error handling in the onSubmit function
 
-            if(user) router.push('/patients/${user.$id}/register')
-        } catch (error) {
-            console.log(error)
+// Add detailed error handling in the onSubmit function
+
+async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
+    setIsLoading(true);
+    try {
+        const userData = { name, email, phone };
+        const user = await createUser(userData);
+
+        if (user) {
+            router.push(`/patients/${user.$id}/register`);
         }
+    } catch (error) {
+        console.error('Failed to create user:', error);
+        alert('Failed to create user. Please try again.');
+    } finally {
+        setIsLoading(false);
     }
+}
     return (
         <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">

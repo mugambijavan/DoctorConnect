@@ -1,20 +1,18 @@
 'use client'
-import React from 'react'
+import React from 'react';
 import {
-    Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
-    } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"  
-import { Control } from 'react-hook-form'
-import { FormFieldType } from './forms/PatientForm'
-import Image from 'next/image'
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";  
+import { Control } from 'react-hook-form';
+import { FormFieldType } from './forms/PatientForm';
+import Image from 'next/image';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 interface CustomProps {
     control: Control<any>,
@@ -33,6 +31,9 @@ interface CustomProps {
 
 const RenderField = ({field, props}:{ field: any; props: CustomProps}) => {
     const {fieldType, iconSrc, iconAlt, placeholder} = props;
+    console.log("RenderField props:", props);
+    console.log("RenderField field:", field);
+    
     switch (fieldType) {
         case FormFieldType.INPUT:
             return(
@@ -71,12 +72,14 @@ const RenderField = ({field, props}:{ field: any; props: CustomProps}) => {
             )
     
         default:
-            break;
+            return null;
     }
 }
 
 const CustomFormField = (props: CustomProps) => {
     const { control, fieldType, name, label } = props;
+    console.log("CustomFormField props:", props);
+    
     return (
         <FormField
         control={control}
@@ -94,4 +97,4 @@ const CustomFormField = (props: CustomProps) => {
     )
 }
 
-export default CustomFormField
+export default CustomFormField;

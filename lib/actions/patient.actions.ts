@@ -1,18 +1,24 @@
-import { Client, Databases } from 'appwrite';
+import { ID, Query } from "node-appwrite";
+import { users } from "../appwrite.config";
+import { CreateUserParams } from "../types/appwrite.types";
 
-const client = new Client();
-client
-    .setEndpoint('YOUR_APPWRITE_ENDPOINT') // Your Appwrite Endpoint
-    .setProject('YOUR_PROJECT_ID'); // Your project ID
-
-const databases = new Databases(client);
-
-export const createUser = async (userData: { name: string, email: string, phone: string }) => {
+export const createUser = async (user: CreateUserParams) => {
     try {
-        const response = await databases.createDocument('YOUR_DATABASE_ID', 'YOUR_COLLECTION_ID', 'unique()', userData);
-        return response;
-    } catch (error) {
-        console.error('Error creating user:', error);
-        throw error;
+        const newUser = await users.create(ID.unique(),
+            user.email, 
+            user.phone, 
+            undefined, 
+            user.name);
+        return newUser;
+    } catch (error: any) {
+        if(error && error?.code === 409) {
+            const documents = await users.list([
+                Query.equal('email', user.email)
+            ]);
+            return documents.users[0];
+        } else {
+            console.error('Error creating user:', error);
+            throw error;
+        }
     }
 };

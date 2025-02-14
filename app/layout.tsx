@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Plus_Jakarta_Sans as FontSans } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 
-const fontSans = Plus_Jakarta_Sans({
+import { cn } from "@/lib/utils";
+
+const fontSans = FontSans({
   subsets: ["latin"],
-  weight: ['300','400', '500', '600', '700'],
-  variable: '--font-sans',
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
   title: "Doctor Connect",
-  description: "A healthcare platform that simplifies patient registration, appointment scheduling, and medical records management with seamless forms and SMS notifications.",
+  description:
+    "A healthcare patient management System designed to streamline patient registration, appointment scheduling, and medical records management for healthcare providers.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -20,18 +25,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isDarkMode = true; // or some condition that is the same on server and client
-
   return (
-    <html lang="en" className={isDarkMode ? "dark" : ""} style={isDarkMode ? { colorScheme: "dark" } : {}}>
+    <html lang="en">
       <body
-        className={cn('min-h-screen bg-dark-300 font-sans antialiased', fontSans.variable)}> 
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        className={cn(
+          "min-h-screen bg-dark-300 font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="dark">
           {children}
         </ThemeProvider>
       </body>
